@@ -1,5 +1,7 @@
 **Lesson Loop — 수업용 음악 플레이어**
 
+[TAEKcoder](https://github.com/ktlee-coder)
+
 [플레이어 열기](https://ktlee-coder.github.io/lesson-loop/)
 
 선생님별 수업곡과 1~4주차 구간을 저장하고, 수업 중 큰 시간 표시와 간단한 버튼으로 음악을 조작합니다.
