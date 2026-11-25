@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko" data-release="1.4.2">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#121517">
+<title>Lesson Loop · 수업용 음악 플레이어</title>
+<meta name="description" content="선생님과 주차를 고르면, 수업 준비 끝. 구간 반복, 음정 유지 느린 재생, 부드러운 페이드를 한곳에서.">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg class="svg-defs" aria-hidden="true"><defs>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="4"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 8l11-2"/><ellipse cx="5.5" cy="18.5" rx="3.5" ry="2.5"/><ellipse cx="16.5" cy="16.5" rx="3.5" ry="2.5"/></symbol>
+<symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 10V8a3 3 0 0 1 3-3h12l-3-3m3 3-3 3M20 14v2a3 3 0 0 1-3 3H5l3 3m-3-3 3-3"/></symbol>
+<symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 5-6 5H2v4h3l6 5ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 5v6h6M4.5 10a8 8 0 1 1-.2 5"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H5v20h14V7Zm0 0v5h5M8 12h8M8 16h5"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-1 .4-1 1-1 2.2M12 17h.01"/></symbol>
+</defs></svg>
+<div class="app-shell">
+<aside class="sidebar">
+<div class="brand" aria-label="Lesson Loop"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>lesson<span class="brand-light">loop</span><small>수업의 흐름을 이어가다</small></span></div>
+<button class="warmup-nav" id="warmup-nav" aria-pressed="false"><svg aria-hidden="true"><use href="#i-music"/></svg><span>준비운동곡</span></button>
+<div class="sidebar-label"><span>MY CLASSES</span><span id="teacher-count">03</span></div>
+<div class="teacher-list" id="teacher-list" aria-label="선생님별 수업"></div>
+<button class="add-teacher" id="add-teacher"><svg><use href="#i-plus"/></svg> 선생님 추가</button>
+<div class="sidebar-bottom">
+<div class="local-note"><span class="device-dot"></span><div>이 기기에 안전하게 저장<small>음원은 서버로 전송되지 않아요</small></div></div>
+<button class="sidebar-link" id="open-settings"><svg><use href="#i-settings"/></svg>설정 · 백업</button>
+<button class="sidebar-link" id="open-help"><svg><use href="#i-help"/></svg>사용 가이드 <span>?</span></button>
+<button class="sidebar-link" id="apply-update"><svg><use href="#i-reset"/></svg>업데이트</button><div id="update-status" role="status" style="font-size:12px;color:#a6b59b;padding:0 12px 8px">현재 버전 사용 중</div><div class="sidebar-foot">LESSON LOOP <span>v1.4.2</span></div>
+</div>
+</aside>
+<main>
+<header class="topbar"><span class="workspace-label">수업 플레이어</span><div class="topbar-right"><div class="heading-actions"><button class="secondary-button hidden" id="back-to-class">수업곡으로 돌아가기</button><button class="secondary-button" id="edit-teacher"><svg><use href="#i-settings"/></svg> 수업 관리</button></div><span id="save-state" class="save-state"><svg><use href="#i-check"/></svg> 자동 저장됨</span><button class="icon-button mobile-settings" aria-label="설정" id="mobile-settings"><svg><use href="#i-settings"/></svg></button></div></header>
+<div class="main-content">
+<div class="retained-context" aria-hidden="true"><span id="breadcrumb-teacher">쏠라 선생님</span><h1 id="class-heading">쏠라 선생님 수업</h1><p id="class-schedule">화요일 오후 7:00</p></div>
+<section class="player-card" id="player-card" aria-label="음악 플레이어">
+<div class="player-layout">
+<div class="player-weeksrail" aria-label="주차별 연습 구간"><section class="weeks-section" id="weeks-section"><div class="section-heading"><div><h2>주차별 구간 <span>4 WEEKS</span></h2></div><button class="text-button" id="edit-weeks"><svg><use href="#i-settings"/></svg> 구간 편집</button></div><div class="week-grid" id="week-grid"></div></section></div>
+<div class="player-main">
+<div class="player-top"><div class="record-art" aria-hidden="true"><div class="vinyl"><span>ll.</span></div></div><div class="song-heading"><div class="mini-label" id="track-label">CLASS TRACK</div><h2 id="track-title">CRASH</h2><p id="track-artist">ALLDAY PROJECT</p><div class="quality-row"><span class="quality-badge" id="quality-badge">원본 음원</span><span id="file-meta">음원을 연결해 주세요</span><span id="output-gain-badge" class="output-gain-badge hidden"></span></div></div><button id="connect-audio" class="file-button"><svg><use href="#i-upload"/></svg><span id="connect-label">음원 연결</span></button></div>
+<div class="player-divider"></div>
+<div class="playback-meta"><span class="section-tag" id="active-week-tag">WEEK 01 <span>1주차 구간</span></span><span class="playback-state" id="playback-state">음원 연결 대기</span></div>
+<div class="waveform-wrap" id="waveform-wrap"><canvas id="waveform" aria-hidden="true"></canvas><div class="waveform-empty" id="waveform-empty"><svg><use href="#i-music"/></svg><span>수업 음원을 연결하면 파형이 표시돼요</span></div><input type="range" id="seek" min="0" max="100" step="0.01" value="0" aria-label="재생 위치" disabled><div class="loop-labels" aria-hidden="true"><span id="wave-start"></span><span id="wave-end"></span></div></div>
+<div class="timeline-labels"><span class="clock-caption">현재 재생 시간</span><div class="playback-clock" role="timer" aria-label="현재 재생 시간" aria-live="off"><span id="current-time">00:00</span><span class="time-total"><span aria-hidden="true">/</span><span id="duration">--:--</span></span></div><span class="range-summary" id="range-summary">반복 구간 00:00 – 00:30</span></div>
+<div class="transport"><div class="transport-side speed-control"><span class="control-label">재생 속도</span><div class="segmented" role="group" aria-label="재생 속도"><button data-rate="1" class="active" aria-pressed="true">1.0<span>×</span></button><button data-rate="0.8" aria-pressed="false">0.8<span>×</span></button></div><span class="micro-note">음정 유지</span></div><div class="transport-main"><button class="rewind-button" id="restart" title="선택한 주차 시작부터 재생 (R)" aria-label="주차 시작부터 재생"><svg><use href="#i-reset"/></svg></button><button class="play-button" id="play" disabled><svg><use href="#i-play"/></svg><span>재생</span></button><button class="loop-button active" id="loop" title="구간 반복 (L)" aria-label="구간 반복" aria-pressed="true"><svg><use href="#i-loop"/></svg></button></div><div class="transport-side volume-control"><svg><use href="#i-volume"/></svg><input type="range" id="volume" aria-label="볼륨" min="0" max="100" value="80"><span id="volume-label">80%</span></div></div>
+<div class="fade-monitor" id="fade-monitor" data-phase="idle" data-muted="false" style="--fade-level:0" role="meter" aria-label="페이드 진행 레벨" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+<div class="fade-monitor-top"><div class="fade-monitor-title"><svg id="fade-direction" class="fade-direction" viewBox="0 0 30 22" aria-hidden="true"><path class="fade-curve-axis" d="M3 3v16h24"/><path class="fade-curve-ramp" d="M5 16C12 16 15 5 25 5"/></svg><span>FADE ENVELOPE</span></div><output id="fade-value" aria-live="off">0%</output></div>
+<div class="fade-envelope-rail" aria-hidden="true"><span class="fade-rail-bed"></span><span class="fade-envelope-fill" id="fade-fill"></span><span class="fade-fader" id="fade-fader"><i></i></span><span class="fade-rail-ticks"></span></div>
+<div class="fade-monitor-caption"><span class="fade-status-wrap"><span class="fade-state-led" aria-hidden="true"></span><span id="fade-status" aria-live="polite">대기</span></span><span class="fade-mute-badge">음소거</span><span class="fade-scale" aria-hidden="true">0 — 100%</span></div>
+</div>
+<div class="player-footer"><span><span class="fade-curve">◜</span> 페이드 인·아웃 <button id="fade-shortcut">1.0초</button></span><span class="keyboard-hint"><kbd>Space</kbd> 재생 / 정지</span><span class="loop-note" id="loop-note"><svg><use href="#i-loop"/></svg> 구간 반복 켜짐</span></div>
+</div>
+</div>
+</section>
+
+<section class="warmup-library" id="warmup-library" aria-labelledby="warmup-heading"><div class="section-heading"><div><h2 id="warmup-heading">준비운동곡 <span id="warmup-count">0 TRACKS</span></h2><p>모든 선생님이 함께 쓰는 준비운동 음악</p></div><button class="text-button" id="add-warmup"><svg aria-hidden="true"><use href="#i-plus"/></svg> 준비운동곡 추가</button></div><div id="warmup-list"></div></section>
+<section class="track-library" id="lesson-library"><div class="section-heading compact"><h2>수업 음원 <span id="song-count">1 TRACK</span></h2><button class="text-button" id="add-track"><svg><use href="#i-plus"/></svg> 곡 추가</button></div><div id="track-list"></div></section>
+<footer class="main-footer"><span>음악에 집중하고, 수업의 흐름을 이어가세요.</span><span><span class="key-pair"><kbd>1</kbd>–<kbd>4</kbd></span> 주차 선택 <span class="footer-sep">·</span> <kbd>R</kbd> 구간 처음부터</span></footer>
+</div>
+</main></div>
+<input type="file" id="audio-input" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.aiff,.aif,.webm" multiple hidden>
+<input type="file" id="backup-input" accept=".json,.lessonloop,application/json" hidden>
+<dialog id="modal"><div class="modal-header"><div><div class="eyebrow" id="modal-eyebrow">LESSON LOOP</div><h2 id="modal-title"></h2></div><button class="icon-button" id="close-modal" aria-label="닫기"><svg><use href="#i-close"/></svg></button></div><div id="modal-body"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="/release-manager.js"></script><script type="module" src="app.js?v=1.4.2"></script>
+</body></html>

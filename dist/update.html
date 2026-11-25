@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151b17">
+  <title>Lesson Loop 업데이트</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, sans-serif; color: #edf5e8; background: #151b17; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; padding: 24px; display: grid; place-items: center; font-size: 16px; line-height: 1.75; }
+    main { width: min(100%, 560px); padding: 32px; background: #202820; border: 1px solid #43513c; border-radius: 14px; }
+    .brand { color: #c9f494; font-size: 16px; font-weight: 600; margin: 0 0 14px; }
+    h1 { font-size: 27px; line-height: 1.45; margin: 0 0 18px; letter-spacing: -.04em; }
+    p { margin: 0 0 18px; }
+    #update-status { color: #c9f494; font-size: 15px; margin-bottom: 8px; }
+    #update-status[data-state="error"] { color: #ffb4a8; }
+    #update-summary { color: #acbba4; font-size: 14px; margin-bottom: 25px; }
+    button { border: 0; border-radius: 7px; padding: 13px 21px; font: inherit; font-weight: 600; background: #c9f494; color: #1e2b17; cursor: pointer; }
+    button:disabled { opacity: .55; cursor: wait; }
+    button:focus-visible { outline: 2px solid #f0ffe6; outline-offset: 5px; }
+    @media (max-width: 480px) { main { padding: 25px 22px; } h1 { font-size: 24px; } button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">Lesson Loop</p>
+    <h1>필요한 순간에 업데이트하세요</h1>
+    <p>수업 화면은 그대로 유지됩니다.<br>업데이트 적용을 눌러 새 화면을 엽니다.</p>
+    <p id="update-status" role="status" aria-live="polite">업데이트를 확인하고 있습니다.</p>
+    <p id="update-summary"></p>
+    <button id="apply-update" type="button" disabled>업데이트 적용</button>
+  </main>
+  <script type="module" src="./release-manager.js"></script>
+</body>
+</html>

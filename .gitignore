@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+*.tar.gz
+qa/
+*.lessonloop
+
+Lesson Loop.html
+
+.openai/
+_site/
+__pycache__/
